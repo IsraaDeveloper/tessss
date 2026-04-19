@@ -193,8 +193,8 @@ app.post('/api/venn/callback', async (req, res) => {
             axios.post(userVal.webhookUrl, {
               status: 'PAID',
               vennpayTrxId: trxId,
-              clientReferenceNo: trxData.clientReferenceNo,
-              amount: netMasukKeUser // Beritahu merchant nominal yang masuk
+              clientReferenceNo: trxData.referenceNo, // Fix the field name
+              amount: netMasukKeUser 
             }).catch(e => console.log('Forward webhook error:', e.message));
           }
         }
