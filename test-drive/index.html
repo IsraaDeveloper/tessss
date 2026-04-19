@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vennpay Test Drive 🚀</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="badge">MERCHANT SIMULATOR</div>
+            <h1>🛒 Toko Game Gacor</h1>
+            <p>Cobain bayar pake API Vennpay lu sendiri di sini.</p>
+        </header>
+
+        <div class="card" id="form-container">
+            <div class="form-group">
+                <label for="apiKey">API Key Vennpay Lu</label>
+                <input type="text" id="apiKey" placeholder="VENN-xxxx-xxxx-xxxx" value="">
+                <small>Ambil di menu Developer dashboard Vennpay lu.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="amount">Nominal Pembayaran (Rp)</label>
+                <input type="number" id="amount" placeholder="Contoh: 15000" defaultValue="15000">
+            </div>
+
+            <button id="pay-btn" class="btn-brutal">BAYAR SEKARANG 💳</button>
+        </div>
+
+        <div id="payment-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Scan buat Bayar QRIS 📲</h2>
+                    <button class="close-btn">&times;</button>
+                </div>
+                <div class="qr-container">
+                    <img id="qr-image" src="" alt="QRIS Code">
+                    <div id="loading-qr">Lagi nembak API... 🔫</div>
+                </div>
+                <div class="payment-info">
+                    <div class="info-row">
+                        <span>Harga Produk</span>
+                        <span id="display-merchant-amount">Rp 0</span>
+                    </div>
+                    <div class="info-row">
+                        <span>Biaya Layanan</span>
+                        <span id="display-fee" class="text-primary">Rp 0</span>
+                    </div>
+                    <div class="info-row total">
+                        <span>Total Tagihan</span>
+                        <span id="display-amount">Rp 0</span>
+                    </div>
+                    <div class="info-footer">
+                        ID Transaksi: <span id="display-trxid">-</span>
+                    </div>
+                </div>
+                <div class="status-box pending">
+                    MENUNGGU PEMBAYARAN...
+                </div>
+                <p class="footer-msg">Halaman ini otomatis dapet notifikasi kalo lu udah bayar (via Webhook).</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

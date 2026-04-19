@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<!-- saved from url=(0036)https://sanpay.site/dokumentasi.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokumentasi API QRIS</title>
+    <link href="./Dokumentasi API QRIS_files/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./Dokumentasi API QRIS_files/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="./Dokumentasi API QRIS_files/prism.min.css" id="prism-light">
+    <link rel="stylesheet" href="./Dokumentasi API QRIS_files/prism-okaidia.min.css" id="prism-dark" disabled="true">
+    <style>
+        :root {
+            --sidebar-width: 260px;
+            --header-height: 60px;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f8f9fa;
+            --surface-color: #ffffff;
+            --border-color: #e9ecef;
+            --text-color: #212529;
+            --text-muted-color: #6c757d;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #161616;
+            --surface-color: #212121;
+            --border-color: #333;
+            --text-color: #e0e0e0;
+            --text-muted-color: #888;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            transition: background-color 0.2s;
+        }
+
+        .wrapper {
+            display: flex;
+            padding-top: var(--header-height);
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background-color: var(--surface-color);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            z-index: 1000;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            height: calc(100vh - var(--header-height));
+            position: fixed;
+            top: var(--header-height);
+            left: 0;
+            background-color: var(--surface-color);
+            border-right: 1px solid var(--border-color);
+            padding: 1.5rem 1rem;
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            width: calc(100% - var(--sidebar-width));
+            padding: 2.5rem;
+            transition: margin-left 0.3s ease;
+        }
+
+        .sidebar-nav-link {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: var(--text-muted-color);
+            text-decoration: none;
+            border-radius: 6px;
+            margin-bottom: 4px;
+        }
+
+        .sidebar-nav-link:hover,
+        .sidebar-nav-link.active {
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+
+        .code-block {
+            background-color: var(--surface-color);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            position: relative;
+            border: 1px solid var(--border-color);
+        }
+
+        .code-block .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: var(--bg-color);
+            color: var(--text-muted-color);
+            border: 1px solid var(--border-color);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .method-badge {
+            font-weight: bold;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            margin-right: 0.75rem;
+            font-size: 0.9rem;
+            color: #fff;
+        }
+
+        .get {
+            background-color: #0d6efd;
+        }
+
+        .post {
+            background-color: #198754;
+        }
+
+        .endpoint-url {
+            font-family: monospace;
+            background-color: var(--bg-color);
+            padding: 1rem;
+            border-radius: 6px;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+
+        h2 {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        h4 {
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+                z-index: 1001;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 1.5rem;
+            }
+
+            body.sidebar-visible .sidebar {
+                transform: translateX(0);
+            }
+
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+                display: none;
+            }
+
+            body.sidebar-visible .overlay {
+                display: block;
+            }
+        }
+
+        @media (min-width: 993px) {
+            .mobile-toggle {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body data-theme="light">
+    <header class="header">
+        <button class="btn btn-sm mobile-toggle" id="menu-toggle"><i class="bi bi-list fs-4"></i></button>
+        <span class="fs-5 fw-bold ms-2">API Documentation</span>
+        <div class="ms-auto">
+            <button class="btn btn-sm" id="theme-toggle"><i class="bi bi-moon-fill fs-5"></i></button>
+        </div>
+    </header>
+
+    <div class="wrapper">
+        <aside class="sidebar" id="sidebar">
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="sidebar-nav-link" href="https://sanpay.site/dokumentasi.html#introduction">Pendahuluan</a></li>
+                <li class="nav-item"><a class="sidebar-nav-link" href="https://sanpay.site/dokumentasi.html#callback">API Callback</a></li>
+                <li class="nav-item"><a class="sidebar-nav-link" href="https://sanpay.site/dokumentasi.html#api-generate-qris">API Generate QRIS</a></li>
+                <li class="nav-item"><a class="sidebar-nav-link" href="https://sanpay.site/dokumentasi.html#api-topup-va">API Virtual Account</a></li>
+                <li class="nav-item"><a class="sidebar-nav-link" href="https://sanpay.site/dokumentasi.html#api-topup-retail">API Retail Alfa/Indomaret</a></li>
+                <li class="nav-item"><a class="sidebar-nav-link" href="https://sanpay.site/dokumentasi.html#api-get-channels">API Get Channels</a></li>
+                <li class="nav-item"><a class="sidebar-nav-link" href="https://sanpay.site/dokumentasi.html#callback">API Callback</a></li>
+                <li class="nav-item"><a class="sidebar-nav-link" href="https://sanpay.site/dokumentasi.html#get-mutasi">API Get Mutasi</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <section id="introduction">
+                <h2>Pendahuluan</h2>
+                <p>Selamat datang di dokumentasi API Payment Gateway kami. Dokumen ini akan memandu Anda dalam
+                    mengintegrasikan sistem Anda dengan layanan kami di <strong>sanpay.site</strong>.</p>
+                <h4 class="mt-4">Langkah Awal Integrasi</h4>
+                <ol>
+                    <li>Login ke <a href="https://sanpay.site/" target="_blank">dashboard</a>, lalu masuk ke halaman
+                        <strong>Setting API</strong>.
+                    </li>
+                    <li>Generate <strong>API Key</strong> dan <strong>Merchant Code</strong> Anda.</li>
+                    <li>Masukkan URL endpoint Anda pada kolom <strong>URL Callback</strong>, lalu gunakan tombol
+                        <strong>Validasi URL</strong> untuk memastikan server kami bisa menjangkau server Anda.
+                    </li>
+                </ol>
+                <div class="alert alert-warning mt-4">
+                    <strong>PENTING: Whitelist IP Address</strong>
+                    <p class="mb-2 mt-1">Untuk memastikan server Anda dapat menerima notifikasi dari API Callback kami,
+                        Anda wajib memasukkan IP Address server kami ke dalam daftar whitelist di firewall Anda:</p>
+                    <div class="endpoint-url d-flex justify-content-center align-items-center">
+                        <code id="ip-address">103.127.137.140</code>
+                        <button class="copy-btn ms-3" onclick="copyToClipboard(&#39;ip-address&#39;)"><i class="bi bi-clipboard"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <hr class="my-5">
+
+            <section id="api-generate-qris">
+                <h2>API Generate QRIS</h2>
+                <p>Endpoint ini digunakan untuk membuat QRIS Dinamis berdasarkan nominal yang Anda kirim. Sistem kami
+                    akan membuatkan `qrContent` yang bisa Anda tampilkan sebagai gambar QR.</p>
+
+                <h4 class="mt-4">Endpoint</h4>
+                <div class="endpoint-url bg-light p-3 rounded">
+                    <span class="badge bg-success me-2">POST</span>
+                    <span>https://sanpay.site/api/v1/topup_qris</span>
+                </div>
+
+                <h4 class="mt-4">Validasi Keamanan</h4>
+                <p>Setiap request ke endpoint ini wajib menyertakan 2 header khusus untuk validasi keamanan:</p>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Header</th>
+                                <th>Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>X-Merchant-Code</code></td>
+                                <td>Merchant Code unik Anda.</td>
+                            </tr>
+                            <tr>
+                                <td><code>X-Signature</code></td>
+                                <td>Tanda tangan digital (signature) dari payload (raw body JSON) yang dikirim. Dibuat
+                                    menggunakan algoritma <strong>HMAC-SHA256</strong> dengan <strong>API Key</strong>
+                                    Anda sebagai kunci rahasianya.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 class="mt-4">Struktur Body Request (JSON)</h4>
+                <div class="code-block bg-light p-3 rounded">
+                    <pre class="mb-0 language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"amount"</span><span class="token operator">:</span> <span class="token number">50000</span><span class="token punctuation">,</span>
+  <span class="token property">"partnerReferenceNo"</span><span class="token operator">:</span> <span class="token string">"INV-2025-09-00123"</span><span class="token punctuation">,</span>
+  <span class="token property">"expirySeconds"</span><span class="token operator">:</span> <span class="token number">300</span>
+<span class="token punctuation">}</span></code></pre>
+                </div>
+                <div class="table-responsive mt-3">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Key</th>
+                                <th>Tipe</th>
+                                <th>Deskripsi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>amount</code></td>
+                                <td>Integer</td>
+                                <td><span class="badge text-bg-danger">Wajib.</span> Nominal transaksi dalam bentuk
+                                    bilangan bulat.</td>
+                            </tr>
+                            <tr>
+                                <td><code>partnerReferenceNo</code></td>
+                                <td>String</td>
+                                <td><span class="badge text-bg-danger">Wajib.</span> ID unik transaksi dari sisi Anda
+                                    (contoh: nomor invoice). Harus unik. max 64 Karakter</td>
+                            </tr>
+                            <tr>
+                                <td><code>expirySeconds</code></td>
+                                <td>Integer</td>
+                                <td><span class="badge text-bg-secondary">Opsional.</span> Durasi validitas QRIS dalam
+                                    detik. Jika tidak diisi, default adalah <strong>900</strong> detik (15 menit).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 class="mt-4">Contoh Respons Sukses (JSON)</h4>
+                <div class="code-block bg-light p-3 rounded">
+                    <pre class="mb-0 language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"success"</span><span class="token punctuation">,</span>
+  <span class="token property">"partnerReferenceNo"</span><span class="token operator">:</span> <span class="token string">"INV-2025-09-00123"</span><span class="token punctuation">,</span>
+  <span class="token property">"merchantName"</span><span class="token operator">:</span> <span class="token string">"Nama Merchant Anda"</span><span class="token punctuation">,</span>
+  <span class="token property">"amount"</span><span class="token operator">:</span> <span class="token number">50000</span><span class="token punctuation">,</span>
+  <span class="token property">"qrContent"</span><span class="token operator">:</span> <span class="token string">"000201010212266....DBD7"</span><span class="token punctuation">,</span>
+  <span class="token property">"expiresAt"</span><span class="token operator">:</span> <span class="token string">"2025-09-16 10:45:00"</span>
+<span class="token punctuation">}</span></code></pre>
+                </div>
+            </section>
+
+            <hr class="my-5">
+
+            <section id="api-topup-va">
+                <h2>API Topup Virtual Account</h2>
+                <p>Endpoint ini digunakan untuk membuat Virtual Account (VA) untuk berbagai bank.</p>
+
+                <h4 class="mt-4">Endpoint</h4>
+                <div class="endpoint-url bg-light p-3 rounded">
+                    <span class="badge bg-success me-2">POST</span>
+                    <span>https://sanpay.site/api/v1/topup_va</span>
+                </div>
+
+                <h4 class="mt-4">Validasi Keamanan</h4>
+                <p>Sama seperti API QRIS, wajib menyertakan header <code>X-Merchant-Code</code> dan
+                    <code>X-Signature</code>.
+                </p>
+
+                <h4 class="mt-4">Struktur Body Request (JSON)</h4>
+                <div class="code-block bg-light p-3 rounded">
+                    <pre class="mb-0 language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"amount"</span><span class="token operator">:</span> <span class="token number">50000</span><span class="token punctuation">,</span>
+  <span class="token property">"partnerReferenceNo"</span><span class="token operator">:</span> <span class="token string">"INV-VA-001"</span><span class="token punctuation">,</span>
+  <span class="token property">"bank_code"</span><span class="token operator">:</span> <span class="token string">"BCA"</span><span class="token punctuation">,</span>
+  <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"John Doe"</span>
+<span class="token punctuation">}</span></code></pre>
+                </div>
+                <div class="table-responsive mt-3">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Key</th>
+                                <th>Tipe</th>
+                                <th>Deskripsi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>amount</code></td>
+                                <td>Integer</td>
+                                <td><span class="badge text-bg-danger">Wajib.</span> Nominal transaksi.</td>
+                            </tr>
+                            <tr>
+                                <td><code>partnerReferenceNo</code></td>
+                                <td>String</td>
+                                <td><span class="badge text-bg-danger">Wajib.</span> ID unik transaksi Anda.</td>
+                            </tr>
+                            <tr>
+                                <td><code>bank_code</code></td>
+                                <td>String</td>
+                                <td><span class="badge text-bg-danger">Wajib.</span> Kode Bank (BCA, BNI, BRI, MANDIRI,
+                                    PERMATA, BSI).</td>
+                            </tr>
+                            <tr>
+                                <td><code>name</code></td>
+                                <td>String</td>
+                                <td><span class="badge text-bg-secondary">Opsional.</span> Nama pelanggan.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 class="mt-4">Contoh Respons Sukses (JSON)</h4>
+                <div class="code-block bg-light p-3 rounded">
+                    <pre class="mb-0 language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"success"</span><span class="token punctuation">,</span>
+  <span class="token property">"partnerReferenceNo"</span><span class="token operator">:</span> <span class="token string">"INV-VA-001"</span><span class="token punctuation">,</span>
+  <span class="token property">"amount"</span><span class="token operator">:</span> <span class="token number">50000</span><span class="token punctuation">,</span>
+  <span class="token property">"bank_code"</span><span class="token operator">:</span> <span class="token string">"BCA"</span><span class="token punctuation">,</span>
+  <span class="token property">"va_number"</span><span class="token operator">:</span> <span class="token string">"1234567890"</span><span class="token punctuation">,</span>
+  <span class="token property">"expiration_date"</span><span class="token operator">:</span> <span class="token string">"2025-09-16T10:45:00+07:00"</span>
+<span class="token punctuation">}</span></code></pre>
+                </div>
+            </section>
+
+            <hr class="my-5">
+
+            <section id="api-topup-retail">
+                <h2>API Topup Retail (Alfamart/Indomaret)</h2>
+                <p>Endpoint ini digunakan untuk membuat kode pembayaran di gerai retail.</p>
+
+                <h4 class="mt-4">Endpoint</h4>
+                <div class="endpoint-url bg-light p-3 rounded">
+                    <span class="badge bg-success me-2">POST</span>
+                    <span>https://sanpay.site/api/v1/topup_retail</span>
+                </div>
+
+                <h4 class="mt-4">Validasi Keamanan</h4>
+                <p>Sama seperti API QRIS, wajib menyertakan header <code>X-Merchant-Code</code> dan
+                    <code>X-Signature</code>.
+                </p>
+
+                <h4 class="mt-4">Struktur Body Request (JSON)</h4>
+                <div class="code-block bg-light p-3 rounded">
+                    <pre class="mb-0 language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"amount"</span><span class="token operator">:</span> <span class="token number">50000</span><span class="token punctuation">,</span>
+  <span class="token property">"partnerReferenceNo"</span><span class="token operator">:</span> <span class="token string">"INV-RET-001"</span><span class="token punctuation">,</span>
+  <span class="token property">"retail_outlet"</span><span class="token operator">:</span> <span class="token string">"ALFAMART"</span><span class="token punctuation">,</span>
+  <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"John Doe"</span>
+<span class="token punctuation">}</span></code></pre>
+                </div>
+                <div class="table-responsive mt-3">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Key</th>
+                                <th>Tipe</th>
+                                <th>Deskripsi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>amount</code></td>
+                                <td>Integer</td>
+                                <td><span class="badge text-bg-danger">Wajib.</span> Nominal transaksi.</td>
+                            </tr>
+                            <tr>
+                                <td><code>partnerReferenceNo</code></td>
+                                <td>String</td>
+                                <td><span class="badge text-bg-danger">Wajib.</span> ID unik transaksi Anda.</td>
+                            </tr>
+                            <tr>
+                                <td><code>retail_outlet</code></td>
+                                <td>String</td>
+                                <td><span class="badge text-bg-danger">Wajib.</span> ALFAMART atau INDOMARET.</td>
+                            </tr>
+                            <tr>
+                                <td><code>name</code></td>
+                                <td>String</td>
+                                <td><span class="badge text-bg-secondary">Opsional.</span> Nama pelanggan.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 class="mt-4">Contoh Respons Sukses (JSON)</h4>
+                <div class="code-block bg-light p-3 rounded">
+                    <pre class="mb-0 language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"success"</span><span class="token punctuation">,</span>
+  <span class="token property">"partnerReferenceNo"</span><span class="token operator">:</span> <span class="token string">"INV-RET-001"</span><span class="token punctuation">,</span>
+  <span class="token property">"amount"</span><span class="token operator">:</span> <span class="token number">50000</span><span class="token punctuation">,</span>
+  <span class="token property">"retail_outlet"</span><span class="token operator">:</span> <span class="token string">"ALFAMART"</span><span class="token punctuation">,</span>
+  <span class="token property">"payment_code"</span><span class="token operator">:</span> <span class="token string">"888881234567"</span><span class="token punctuation">,</span>
+  <span class="token property">"expiration_date"</span><span class="token operator">:</span> <span class="token string">"2025-09-16T10:45:00+07:00"</span>
+<span class="token punctuation">}</span></code></pre>
+                </div>
+            </section>
+
+            <hr class="my-5">
+
+            <section id="api-get-channels">
+                <h2>API Get Channels</h2>
+                <p>Endpoint ini digunakan untuk mengambil daftar channel VA (Virtual Account) dan Retail
+                    (Alfamart/Indomaret) yang tersedia dan aktif, beserta informasi biaya admin untuk setiap channel.
+                </p>
+
+                <h4 class="mt-4">Endpoint</h4>
+                <div class="endpoint-url bg-light p-3 rounded">
+                    <span class="badge bg-info me-2">GET</span>
+                    <span>https://sanpay.site/api/v1/get_channels</span>
+                </div>
+
+                <h4 class="mt-4">Parameter</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>apikey</code></td>
+                                <td><span class="badge text-bg-danger">Wajib.</span> API Key dari dashboard Anda.</td>
+                            </tr>
+                            <tr>
+                                <td><code>merchant_code</code></td>
+                                <td><span class="badge text-bg-danger">Wajib.</span> Merchant Code dari dashboard Anda.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 class="mt-4">Contoh URL Request</h4>
+                <div class="endpoint-url bg-light p-3 rounded">
+                    <code>https://sanpay.site/api/v1/get_channels?apikey=APIKEY_ANDA&amp;merchant_code=MERCHANT_CODE_ANDA</code>
+                </div>
+
+                <h4 class="mt-4">Contoh Respons Sukses (JSON)</h4>
+                <div class="code-block bg-light p-3 rounded">
+                    <pre class="mb-0 language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"success"</span><span class="token punctuation">,</span>
+  <span class="token property">"data"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"va_channels"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"code"</span><span class="token operator">:</span> <span class="token string">"BCA"</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Bank Central Asia"</span><span class="token punctuation">,</span>
+        <span class="token property">"min_amount"</span><span class="token operator">:</span> <span class="token number">10000</span><span class="token punctuation">,</span>
+        <span class="token property">"max_amount"</span><span class="token operator">:</span> <span class="token number">50000000</span><span class="token punctuation">,</span>
+        <span class="token property">"admin_fee_type"</span><span class="token operator">:</span> <span class="token string">"FIXED"</span><span class="token punctuation">,</span>
+        <span class="token property">"admin_fee_value"</span><span class="token operator">:</span> <span class="token number">4000</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"code"</span><span class="token operator">:</span> <span class="token string">"BNI"</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Bank Negara Indonesia"</span><span class="token punctuation">,</span>
+        <span class="token property">"min_amount"</span><span class="token operator">:</span> <span class="token number">10000</span><span class="token punctuation">,</span>
+        <span class="token property">"max_amount"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+        <span class="token property">"admin_fee_type"</span><span class="token operator">:</span> <span class="token string">"PERCENT"</span><span class="token punctuation">,</span>
+        <span class="token property">"admin_fee_value"</span><span class="token operator">:</span> <span class="token number">1.5</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"retail_channels"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"code"</span><span class="token operator">:</span> <span class="token string">"ALFAMART"</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Alfamart"</span><span class="token punctuation">,</span>
+        <span class="token property">"min_amount"</span><span class="token operator">:</span> <span class="token number">10000</span><span class="token punctuation">,</span>
+        <span class="token property">"max_amount"</span><span class="token operator">:</span> <span class="token number">5000000</span><span class="token punctuation">,</span>
+        <span class="token property">"admin_fee_type"</span><span class="token operator">:</span> <span class="token string">"FIXED"</span><span class="token punctuation">,</span>
+        <span class="token property">"admin_fee_value"</span><span class="token operator">:</span> <span class="token number">2500</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"code"</span><span class="token operator">:</span> <span class="token string">"INDOMARET"</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Indomaret"</span><span class="token punctuation">,</span>
+        <span class="token property">"min_amount"</span><span class="token operator">:</span> <span class="token number">10000</span><span class="token punctuation">,</span>
+        <span class="token property">"max_amount"</span><span class="token operator">:</span> <span class="token number">5000000</span><span class="token punctuation">,</span>
+        <span class="token property">"admin_fee_type"</span><span class="token operator">:</span> <span class="token string">"FIXED"</span><span class="token punctuation">,</span>
+        <span class="token property">"admin_fee_value"</span><span class="token operator">:</span> <span class="token number">2500</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+                </div>
+
+                <h4 class="mt-4">Penjelasan Field Response</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Tipe</th>
+                                <th>Deskripsi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>code</code></td>
+                                <td>String</td>
+                                <td>Kode channel (contoh: "BCA", "BNI", "ALFAMART")</td>
+                            </tr>
+                            <tr>
+                                <td><code>name</code></td>
+                                <td>String</td>
+                                <td>Nama lengkap channel</td>
+                            </tr>
+                            <tr>
+                                <td><code>min_amount</code></td>
+                                <td>Integer</td>
+                                <td>Nominal minimum transaksi (dalam Rupiah)</td>
+                            </tr>
+                            <tr>
+                                <td><code>max_amount</code></td>
+                                <td>Integer</td>
+                                <td>Nominal maksimum transaksi (dalam Rupiah). Jika bernilai <code>0</code> berarti
+                                    unlimited (tidak ada batas)</td>
+                            </tr>
+                            <tr>
+                                <td><code>admin_fee_type</code></td>
+                                <td>String</td>
+                                <td>
+                                    Jenis biaya admin:<br>
+                                    • <code>"FIXED"</code> = Biaya tetap dalam Rupiah<br>
+                                    • <code>"PERCENT"</code> = Biaya persentase dari nominal transaksi
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>admin_fee_value</code></td>
+                                <td>Float</td>
+                                <td>
+                                    Nilai biaya admin:<br>
+                                    • Jika <code>admin_fee_type</code> = "FIXED", nilai dalam Rupiah (contoh: 4000 = Rp
+                                    4.000)<br>
+                                    • Jika <code>admin_fee_type</code> = "PERCENT", nilai dalam persen (contoh: 1.5 =
+                                    1.5%)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="alert alert-info mt-4">
+                    <strong>Contoh Perhitungan Biaya Admin:</strong>
+                    <ul class="mb-0 mt-2">
+                        <li><strong>FIXED:</strong> Jika transaksi Rp 100.000 dengan <code>admin_fee_type</code> =
+                            "FIXED" dan <code>admin_fee_value</code> = 4000, maka total yang harus dibayar = Rp 100.000
+                            + Rp 4.000 = <strong>Rp 104.000</strong></li>
+                        <li><strong>PERCENT:</strong> Jika transaksi Rp 100.000 dengan <code>admin_fee_type</code> =
+                            "PERCENT" dan <code>admin_fee_value</code> = 1.5, maka total yang harus dibayar = Rp 100.000
+                            + (1.5% × Rp 100.000) = Rp 100.000 + Rp 1.500 = <strong>Rp 101.500</strong></li>
+                    </ul>
+                </div>
+            </section>
+
+            <hr class="my-5">
+
+            <section id="callback">
+                <h2>API Callback (Webhook)</h2>
+                <p>API Callback adalah mekanisme notifikasi otomatis dimana sistem kami akan secara proaktif "memberi
+                    tahu" server Anda setiap kali ada pembayaran yang berhasil.</p>
+
+                <h4 class="mt-4">Validasi Endpoint Callback Anda</h4>
+                <p>Di halaman <strong>Setting API</strong>, terdapat tombol "Validasi URL". Tombol ini akan mengirimkan
+                    sebuah <strong>request tes</strong> ke URL yang Anda masukkan. Tujuannya adalah untuk memastikan
+                    server Anda dapat dijangkau dan merespons dengan benar.</p>
+                <p>Agar validasi berhasil, server Anda harus:</p>
+                <ol>
+                    <li>Menerima request POST dari kami.</li>
+                    <li>Memvalidasi header `X-Merchant-Code` dan `X-Signature` yang kami kirim (opsional untuk tes, tapi
+                        wajib untuk transaksi sungguhan).</li>
+                    <li>Merespons dengan <strong>HTTP Status Code 200 OK</strong>.</li>
+                </ol>
+
+                <p>Berikut adalah contoh payload JSON yang akan kami kirim saat Anda menekan tombol validasi:</p>
+                <div class="code-block bg-light p-3 rounded">
+                    <pre class="mb-0 language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"transactionID"</span><span class="token operator">:</span> <span class="token string">"TEST_1726456800"</span><span class="token punctuation">,</span>
+  <span class="token property">"amount"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+  <span class="token property">"customerName"</span><span class="token operator">:</span> <span class="token string">"VALIDATION TEST"</span><span class="token punctuation">,</span>
+  <span class="token property">"isValidationTest"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span></code></pre>
+                </div>
+
+                <h4 class="mt-4">Validasi Keamanan Callback</h4>
+                <p>Setiap request callback dari server kami akan menyertakan 2 header khusus untuk validasi keamanan:
+                </p>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Header</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>X-Merchant-Code</code></td>
+                            <td>Merchant Code unik Anda.</td>
+                        </tr>
+                        <tr>
+                            <td><code>X-Signature</code></td>
+                            <td>Tanda tangan digital (signature) dari payload yang dikirim. Dibuat menggunakan algoritma
+                                <strong>HMAC-SHA256</strong> dengan <strong>API Key</strong> Anda sebagai kunci
+                                rahasianya.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>Anda wajib memvalidasi kedua header ini untuk memastikan notifikasi berasal dari sumber yang sah.</p>
+
+                <h4 class="mt-4">Struktur Body Request (JSON)</h4>
+                <p>Berikut adalah detail dari data JSON yang akan kami kirimkan ke URL callback Anda.</p>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard(&#39;callback-payload&#39;)"><i class="bi bi-clipboard"></i></button>
+                    <pre class="language-json" tabindex="0"><code id="callback-payload" class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"transactionID"</span><span class="token operator">:</span> <span class="token string">"QRS2025091512345"</span><span class="token punctuation">,</span>
+  <span class="token property">"merchantId"</span><span class="token operator">:</span> <span class="token string">"MERCHANT001"</span><span class="token punctuation">,</span>
+  <span class="token property">"storeId"</span><span class="token operator">:</span> <span class="token string">"STORE001"</span><span class="token punctuation">,</span>
+  <span class="token property">"amount"</span><span class="token operator">:</span> <span class="token number">10000</span><span class="token punctuation">,</span>
+  <span class="token property">"transactionDate"</span><span class="token operator">:</span> <span class="token string">"2025-09-15 10:30:00"</span><span class="token punctuation">,</span>
+  <span class="token property">"customerName"</span><span class="token operator">:</span> <span class="token string">"John Doe"</span><span class="token punctuation">,</span>
+  <span class="token property">"referenceNo"</span><span class="token operator">:</span> <span class="token string">"REF12345678"</span>
+<span class="token punctuation">}</span></code></pre>
+                </div>
+                <table class="table table-bordered mt-3">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Tipe</th>
+                            <th>Deskripsi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>transactionID</code></td>
+                            <td>String</td>
+                            <td>ID unik transaksi dari sistem kami.</td>
+                        </tr>
+                        <tr>
+                            <td><code>merchantId</code></td>
+                            <td>String</td>
+                            <td>ID merchant yang terkait dengan transaksi.</td>
+                        </tr>
+                        <tr>
+                            <td><code>storeId</code></td>
+                            <td>String</td>
+                            <td>ID toko/outlet yang terkait dengan transaksi.</td>
+                        </tr>
+                        <tr>
+                            <td><code>amount</code></td>
+                            <td>Integer</td>
+                            <td>Jumlah nominal transaksi dalam bentuk bilangan bulat.</td>
+                        </tr>
+                        <tr>
+                            <td><code>transactionDate</code></td>
+                            <td>String</td>
+                            <td>Waktu transaksi dalam format YYYY-MM-DD HH:MM:SS.</td>
+                        </tr>
+                        <tr>
+                            <td><code>customerName</code></td>
+                            <td>String</td>
+                            <td>Nama pelanggan yang melakukan pembayaran.</td>
+                        </tr>
+                        <tr>
+                            <td><code>referenceNo</code></td>
+                            <td>String</td>
+                            <td>Nomor referensi. Nilai akan muncul jika Api Generete QRIS digunakan yang menyertakan
+                                partnerReferenceNo, nilai akan kosong jika tidak membuat sistem untuk Api Generete QRIS.
+                                (tidak wajib)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 class="mt-5">Struktur Callback untuk Virtual Account &amp; Retail</h4>
+                <p>Untuk pembayaran melalui Virtual Account atau Retail (Alfamart/Indomaret), struktur callback yang
+                    dikirim ke server Anda adalah sebagai berikut:</p>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard(&#39;callback-va-retail&#39;)"><i class="bi bi-clipboard"></i></button>
+                    <pre class="language-json" tabindex="0"><code id="callback-va-retail" class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"success"</span><span class="token punctuation">,</span>
+  <span class="token property">"partnerReferenceNo"</span><span class="token operator">:</span> <span class="token string">"INV-VA-001"</span><span class="token punctuation">,</span>
+  <span class="token property">"external_id"</span><span class="token operator">:</span> <span class="token string">"VA_1732089600_abc123"</span><span class="token punctuation">,</span>
+  <span class="token property">"amount"</span><span class="token operator">:</span> <span class="token number">50000</span><span class="token punctuation">,</span>
+  <span class="token property">"payment_status"</span><span class="token operator">:</span> <span class="token string">"PAID"</span>
+<span class="token punctuation">}</span></code></pre>
+                </div>
+                <table class="table table-bordered mt-3">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Tipe</th>
+                            <th>Deskripsi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>status</code></td>
+                            <td>String</td>
+                            <td>Status callback, selalu "success" untuk pembayaran berhasil.</td>
+                        </tr>
+                        <tr>
+                            <td><code>partnerReferenceNo</code></td>
+                            <td>String</td>
+                            <td>ID referensi yang Anda kirimkan saat membuat transaksi.</td>
+                        </tr>
+                        <tr>
+                            <td><code>external_id</code></td>
+                            <td>String</td>
+                            <td>ID unik transaksi dari sistem kami.</td>
+                        </tr>
+                        <tr>
+                            <td><code>amount</code></td>
+                            <td>Integer</td>
+                            <td>Nominal yang dibayarkan.</td>
+                        </tr>
+                        <tr>
+                            <td><code>payment_status</code></td>
+                            <td>String</td>
+                            <td>Status pembayaran, nilai "PAID" untuk pembayaran berhasil.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 class="mt-4">Contoh Kode PHP Penerima &amp; Validator</h4>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard(&#39;php-example&#39;)"><i class="bi bi-clipboard"></i></button>
+                    <pre class="language-php" tabindex="0"><code id="php-example" class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token variable">$your_merchant_code</span> <span class="token operator">=</span> <span class="token string single-quoted-string">'MC-xxxxxxxx'</span><span class="token punctuation">;</span>
+<span class="token variable">$your_api_key</span> <span class="token operator">=</span> <span class="token string single-quoted-string">'APIKEY_RAHASIA_ANDA'</span><span class="token punctuation">;</span>
+
+<span class="token variable">$merchant_code_header</span> <span class="token operator">=</span> <span class="token variable">$_SERVER</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'HTTP_X_MERCHANT_CODE'</span><span class="token punctuation">]</span> <span class="token operator">??</span> <span class="token string single-quoted-string">''</span><span class="token punctuation">;</span>
+<span class="token variable">$signature_header</span> <span class="token operator">=</span> <span class="token variable">$_SERVER</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'HTTP_X_SIGNATURE'</span><span class="token punctuation">]</span> <span class="token operator">??</span> <span class="token string single-quoted-string">''</span><span class="token punctuation">;</span>
+
+<span class="token variable">$raw_body</span> <span class="token operator">=</span> <span class="token function">file_get_contents</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'php://input'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$merchant_code_header</span> <span class="token operator">!==</span> <span class="token variable">$your_merchant_code</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">401</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'status'</span> <span class="token operator">=&gt;</span> <span class="token string single-quoted-string">'error'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'message'</span> <span class="token operator">=&gt;</span> <span class="token string single-quoted-string">'Invalid Merchant Code'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">exit</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token variable">$calculated_signature</span> <span class="token operator">=</span> <span class="token function">hash_hmac</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'sha256'</span><span class="token punctuation">,</span> <span class="token variable">$raw_body</span><span class="token punctuation">,</span> <span class="token variable">$your_api_key</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">hash_equals</span><span class="token punctuation">(</span><span class="token variable">$calculated_signature</span><span class="token punctuation">,</span> <span class="token variable">$signature_header</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">401</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'status'</span> <span class="token operator">=&gt;</span> <span class="token string single-quoted-string">'error'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'message'</span> <span class="token operator">=&gt;</span> <span class="token string single-quoted-string">'Invalid Signature'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">exit</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token variable">$data</span> <span class="token operator">=</span> <span class="token function">json_decode</span><span class="token punctuation">(</span><span class="token variable">$raw_body</span><span class="token punctuation">,</span> <span class="token constant boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'status'</span> <span class="token operator">=&gt;</span> <span class="token string single-quoted-string">'success'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter important">?&gt;</span></span></code></pre>
+                </div>
+            </section>
+
+            <hr class="my-5">
+
+            <section id="get-mutasi">
+                <h2>API Get Mutasi</h2>
+                <p>Gunakan API ini untuk mengambil riwayat <strong>50 transaksi terakhir</strong> secara manual. Berguna
+                    untuk rekonsiliasi atau pengecekan cepat.</p>
+
+                <h4 class="mt-4">Endpoint</h4>
+                <div class="endpoint-url">
+                    <span class="method-badge get">GET</span>
+                    <span>https://sanpay.site/api/v1/get_mutasi</span>
+                </div>
+
+                <h4 class="mt-4">Parameter</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>apikey</code></td>
+                            <td><span class="badge text-bg-danger">Wajib.</span> API Key dari dashboard Anda.</td>
+                        </tr>
+                        <tr>
+                            <td><code>merchant_code</code></td>
+                            <td><span class="badge text-bg-danger">Wajib.</span> Merchant Code dari dashboard Anda.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 class="mt-4">Contoh URL Request</h4>
+                <div class="endpoint-url">
+                    <span id="get-mutasi-url">https://sanpay.site/api/v1/get_mutasi?apikey=APIKEY_ANDA&amp;merchant_code=MERCHANT_CODE_ANDA</span>
+                </div>
+
+                <h4 class="mt-4">Contoh Respons Sukses</h4>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard(&#39;get-mutasi-success&#39;)"><i class="bi bi-clipboard"></i></button>
+                    <pre class="language-json" tabindex="0"><code id="get-mutasi-success" class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"success"</span><span class="token punctuation">,</span>
+  <span class="token property">"message"</span><span class="token operator">:</span> <span class="token string">"Data mutasi berhasil diambil"</span><span class="token punctuation">,</span>
+  <span class="token property">"data"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"transactionID"</span><span class="token operator">:</span> <span class="token string">"QRS2025091512345"</span><span class="token punctuation">,</span>
+      <span class="token property">"transactionDate"</span><span class="token operator">:</span> <span class="token string">"2025-09-15 10:30:00"</span><span class="token punctuation">,</span>
+      <span class="token property">"amount"</span><span class="token operator">:</span> <span class="token number">10000</span><span class="token punctuation">,</span>
+      <span class="token property">"customerName"</span><span class="token operator">:</span> <span class="token string">"John Doe"</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span></code></pre>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <script src="./Dokumentasi API QRIS_files/prism.min.js.download"></script>
+    <script src="./Dokumentasi API QRIS_files/prism-autoloader.min.js.download"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = themeToggle.querySelector('i');
+            const lightPrism = document.getElementById('prism-light');
+            const darkPrism = document.getElementById('prism-dark');
+            const menuToggle = document.getElementById('menu-toggle');
+            const overlay = document.getElementById('overlay');
+
+            const applyTheme = (theme) => {
+                document.body.setAttribute('data-theme', theme);
+                if (theme === 'dark') {
+                    themeIcon.classList.replace('bi-moon-fill', 'bi-sun-fill');
+                    darkPrism.removeAttribute('disabled');
+                    lightPrism.setAttribute('disabled', 'true');
+                } else {
+                    themeIcon.classList.replace('bi-sun-fill', 'bi-moon-fill');
+                    lightPrism.removeAttribute('disabled');
+                    darkPrism.setAttribute('disabled', 'true');
+                }
+            };
+
+            themeToggle.addEventListener('click', () => {
+                const newTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                applyTheme(newTheme);
+                localStorage.setItem('docs-theme', newTheme);
+            });
+
+            const savedTheme = localStorage.getItem('docs-theme') || 'light';
+            applyTheme(savedTheme);
+
+            menuToggle.addEventListener('click', () => {
+                document.body.classList.toggle('sidebar-visible');
+            });
+            overlay.addEventListener('click', () => {
+                document.body.classList.remove('sidebar-visible');
+            });
+        });
+
+        function copyToClipboard(elementId) {
+            const codeEl = document.getElementById(elementId);
+            navigator.clipboard.writeText(codeEl.innerText).then(() => {
+                const btn = document.querySelector(`button[onclick="copyToClipboard('${elementId}')"]`);
+                const originalContent = btn.innerHTML;
+                btn.innerHTML = '<i class="bi bi-check-lg"></i>';
+                setTimeout(() => { btn.innerHTML = originalContent; }, 1500);
+            });
+        }
+    </script>
+<script defer="" src="./Dokumentasi API QRIS_files/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;2ce1fc331ce9471f972ddaad7bc9ec53&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
+
+
+</body></html>
