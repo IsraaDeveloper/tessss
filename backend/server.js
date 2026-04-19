@@ -147,7 +147,7 @@ app.post('/api/v1/payment', async (req, res) => {
    2. ROUTE WEBHOOK (DARI SANPAY KE KITA)
 ============================================= */
 
-app.post('/api/sanpay/callback', async (req, res) => {
+app.post('/api/venn/callback', async (req, res) => {
   const merchantCode = req.headers['x-merchant-code'];
   const signatureHeader = req.headers['x-signature'];
 
